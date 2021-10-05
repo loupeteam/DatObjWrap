@@ -1,0 +1,14 @@
+(********************************************************************
+ * COPYRIGHT -- B&R Industrial Automation
+ ********************************************************************
+ * Library: DatObjWrap
+ * File: DatObjWrap.var
+ * Author: blackburnd
+ * Created: March 10, 2010
+ ********************************************************************
+ * Constants of library DatObjWrap
+ ********************************************************************)
+VAR CONSTANT
+	DOWRAP_STATUS_FUB_DISABLED : UINT := 65534;
+	DOWRAP_STRLEN_ERROR : USINT := 80;
+END_VAR

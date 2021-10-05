@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;}
+body {
+	font:13.34px helvetica,arial,freesans,clean,sans-serif;
+	color:black;
+	line-height:1.4em;
+	background-color: #F8F8F8;
+	padding: 0.7em;
+}
+p {
+	margin:1em 0;
+	line-height:1.5em;
+}
+table {
+	font-size:inherit;
+	font:100%;
+	margin:1em;
+}
+table th{border-bottom:1px solid #bbb;padding:.2em 1em;}
+table td{border-bottom:1px solid #ddd;padding:.2em 1em;}
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+pre {
+	margin:1em 0;
+	font-size:12px;
+	background-color:#eee;
+	border:1px solid #ddd;
+	padding:5px;
+	line-height:1.5em;
+	color:#444;
+	overflow:auto;
+	-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;border-radius:3px;
+}
+pre code {
+	padding:0;
+	font-size:12px;
+	background-color:#eee;
+	border:none;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8ff;
+	color:#444;
+	padding:0 .2em;
+	border:1px solid #dedede;
+}
+img{border:0;max-width:100%;}
+abbr{border-bottom:none;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+a code,a:link code,a:visited code{color:#4183c4;}
+
+h1,h2,h3,h4,h5,h6{border:0;}
+
+h1{font-size:200%;margin-top:1em;margin-bottom:1em}
+
+h2{font-size:170%;padding-bottom:.5em;border-bottom:1px solid #d0d0d0;margin-top:1em;}
+
+h3{margin-top:1em;}
+
+hr{border:1px solid #ddd;}
+ul{margin:1em 0 1em 2em;}
+ol{margin:1em 0 1em 2em;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0;margin-bottom:0;}
+
+blockquote{margin:1em 0;border-left:5px solid #ddd;padding-left:.6em;color:#555;}
+
+dt{font-weight:bold;margin-left:1em;}
+dd{margin-left:2em;margin-bottom:1em;}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title>DatObjWrap.html</title>
+</head>
+<body>
+<p><img src="http://automationresourcesgroup.com/images/arglogo254x54.png" alt="Automation Resources Group" /></p>
+
+<h1>DatObjWrap Library</h1>
+
+<p>The DatObjWrap library provides a simple, intuitive interface for opening and saving data objects.</p>
+
+<p>Data objects offer power fail safe data storage. They have the advantage over permanent memory that they are also protected against battery failure. The DatObjWrap library provides a clean interface for the most common data object operations. Any state machines necessary to perform these operations are built into the library and do not need to be implemented by the application developer.</p>
+
+<h1>Usage</h1>
+
+<p>The DatObjWrap functionality can be integrated into any project using a data structure and two function calls. For an example of how to use this in a project, please see the ARG Automation Studio Starter Project at <a href="https://github.com/autresgrp/StarterProject">https://github.com/autresgrp/StarterProject</a>.</p>
+
+<h2>Initialization</h2>
+
+<p>The only initialization necessary is to declare a variable of type <strong>DatObjWrap_typ</strong>.</p>
+
+<h2>Opening Data Objects on Startup</h2>
+
+<p>To open a data object on startup, the DataObjWrapper variable must be parameterized and the <strong>DatObjWrapOpen_Init()</strong> function must be called. <strong>The DatObjWrapOpen_Init() function can only be called in the INIT routine of your program.</strong></p>
+
+<pre><code>DatObjWrapper.IN.PAR.DataObjName:=  'rec1';
+DatObjWrapper.IN.PAR.pData:=        ADR(Recipe);
+DatObjWrapper.IN.PAR.len:=          SIZEOF(Recipe);
+
+DatObjWrapOpen_Init( DatObjWrapper );
+</code></pre>
+
+<p>After this function call, the Recipe variable will contain the values from the &lsquo;rec1&rsquo; data object. If desired, the DatObjWrapOpen_Init function can be called multiple times with different parameters to load data from multiple data objects.</p>
+
+<h2>Cyclic Operation</h2>
+
+<p>To handle data objects cyclically, the <strong>DatObjWrapFn_Cyclic()</strong> function should be called in the CYCLIC routine of your program, once every scan, unconditionally. This function should not be called on the same DatObjWrapper variable more than once per scan.</p>
+
+<pre><code>DatObjWrapFn_Cyclic( DatObjWrapper );
+</code></pre>
+
+<p>The DatObjWrapper can then be used as an interface for higher level programs.</p>
+
+<pre><code>IF( OpenRecipeDataObject )THEN
+
+    OpenRecipeDataObject:=  0;
+
+    DatObjWrapper.IN.PAR.DataObjName:=  'rec1';
+    DatObjWrapper.IN.PAR.pData:=        ADR(Recipe);
+    DatObjWrapper.IN.PAR.len:=          SIZEOF(Recipe);
+
+    DatObjWrapper.IN.CMD.Open:= 1;
+
+END_IF
+
+IF( SaveRecipeDataObject )THEN
+
+    SaveRecipeDataObject:=  0;
+
+    DatObjWrapper.IN.PAR.DataObjName:=  'rec1';
+    DatObjWrapper.IN.PAR.pData:=        ADR(Recipe);
+    DatObjWrapper.IN.PAR.len:=          SIZEOF(Recipe);
+
+    DatObjWrapper.IN.CMD.SaveAs:=   1;
+
+END_IF
+
+IF( DatObjWrapper.OUT.STAT.Done )THEN
+    DatObjWrapper.IN.CMD.Open:=     0;
+    DatObjWrapper.IN.CMD.SaveAs:=   0;
+END_IF
+</code></pre>
+
+<h1>Reference</h1>
+
+<h2>DatObjWrapper Data Structure</h2>
+
+<p>The main data structure of the DatObjWrap library is the DatObjWrapper structure (DatObjWrap_typ datatype). This provides the interface to higher level programs and also stores all necessary internal information. It is divided into inputs (DatObjWrapper.IN), outputs (DatObjWrapper.OUT), and internals (DatObjWrapper.Internal).</p>
+
+<h3>Inputs</h3>
+
+<p>The DatObjWrapper inputs are divided into commands (IN.CMD) and parameters (IN.PAR). Commands are used to initiate operations, and parameters determine how the commands will be processed.</p>
+
+<h4>Commands</h4>
+
+<ul>
+<li><strong>Open</strong> &ndash; Read data from a data object.</li>
+<li><strong>SaveAs</strong> &ndash; Save data to a data object.</li>
+<li><strong>AcknowledgeError</strong> &ndash; Acknowledge any errors that occur during Open or SaveAs operations.</li>
+</ul>
+
+
+<h4>Parameters</h4>
+
+<ul>
+<li><strong>DataObjName</strong> &ndash; Name of the data object to Open or SaveAs.</li>
+<li><strong>pData</strong> &ndash; Starting address of the data buffer. For Open operations, data will be copied from the data object to pData. For SaveAs operations, data will be copied from pData to the data object.</li>
+<li><strong>len</strong> &ndash; Length of the data to be copied, in bytes.</li>
+</ul>
+
+
+<h3>Outputs</h3>
+
+<p>The DatObjWrapper outputs contain status information (OUT.STAT).</p>
+
+<ul>
+<li><strong>Busy</strong> &ndash; Operation is currently being processed.</li>
+<li><strong>Done</strong> &ndash; Operation completed successfully. <strong>Done</strong> is reset when the input command is reset.</li>
+<li><strong>Error</strong> &ndash; Error occurred during operation. <strong>Error</strong> is reset with the <strong>AcknowledgeError</strong> command.</li>
+<li><strong>ErrorID</strong> &ndash; Current error ID number.</li>
+<li><strong>ErrorString</strong> &ndash; Current error text information.</li>
+<li><strong>ErrorLevel</strong> &ndash; Current error level.</li>
+<li><strong>ErrorState</strong> &ndash; State in which the error occurred.</li>
+</ul>
+
+
+<h2>Error ID Numbers</h2>
+
+<ul>
+<li>20600 &ndash; doERR_ILLPARAMETER &ndash; Invalid parameter. Check IN.PAR.pData.</li>
+<li>20601 &ndash; doERR_DUPOBJECT &ndash; Object already present.</li>
+<li>20602 &ndash; doERR_ILLMEMTYPE &ndash; Invalid memory type.</li>
+<li>20603 &ndash; doERR_NOMEMORY &ndash; No memory available for object.</li>
+<li>20604 &ndash; doERR_BRINSTALL &ndash; Error installing data object.</li>
+<li>20605 &ndash; doERR_ILLOBJECT &ndash; Data object not found. Check IN.PAR.DataObjName.</li>
+<li>20606 &ndash; doERR_ILLOBJTYPE &ndash; Object found, but it was not a data object. Check IN.PAR.DataObjName.</li>
+<li>20607 &ndash; doERR_WRONGOFFSET &ndash; Invalid offset specified.</li>
+<li>20608 &ndash; doERR_ILLEGALLENGTH &ndash; Invalid length specified. Check IN.PAR.len.</li>
+<li>20609 &ndash; doERR_MODULNOTFOUND &ndash; Data object not found. Check IN.PAR.DataObjName.</li>
+<li>20610 &ndash; doERR_WRONGTIME &ndash; Invalid date set.</li>
+<li>20611 &ndash; doERR_ILLSTATE &ndash; Data object not in correct state.</li>
+<li>20612 &ndash; doERR_STARTHANDLER &ndash; System error.</li>
+<li>20613 &ndash; doERR_TOOLONG_MODULNAME &ndash; Data object name is too long. Check IN.PAR.DataObjName.</li>
+<li>20614 &ndash; doERR_BURNINGOBJECT &ndash; System error.</li>
+</ul>
+
+
+<p>These error ID numbers are passed on directly from the DataObj library. For additional information, please see the Automation Studio Online Help.</p>
+</body>
+</html>
