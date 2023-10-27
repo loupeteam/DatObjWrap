@@ -1,11 +1,11 @@
-(********************************************************************
- * COPYRIGHT --  B&R Industrial Automation Corporation
- ********************************************************************
- * Library: DatObjWrap
+(*
  * File: DatObjWrapFn_Cyclic.st
- * Author: blackburnd
- * Created: March 05, 2009
- ********************************************************************
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of DatObjWrap, licensed under the MIT License.
+ * 
+  ********************************************************************
  * Implementation of library DatObjWrap
  ********************************************************************) 
 

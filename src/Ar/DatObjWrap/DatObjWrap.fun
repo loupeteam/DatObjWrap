@@ -1,11 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- B&R Industrial Automation
- ********************************************************************
- * Library: DatObjWrap
+(*
  * File: DatObjWrap.fun
- * Author: blackburnd
- * Created: March 10, 2010
- ********************************************************************
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of DatObjWrap, licensed under the MIT License.
+ * 
+  ********************************************************************
  * Functions and function blocks of library DatObjWrap
  ********************************************************************)
 

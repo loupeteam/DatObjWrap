@@ -1,11 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- Automation Resources Group
- ********************************************************************
- * Library: DatObjWrap
+(*
  * File: dowSetError.st
- * Author: David Blackburn
- * Created: December 22, 2011
- ********************************************************************
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of DatObjWrap, licensed under the MIT License.
+ * 
+  ********************************************************************
  * Implementation of library DatObjWrap
  ********************************************************************) 
 

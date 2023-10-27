@@ -1,11 +1,11 @@
-(********************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: DatObjWrap
+(*
  * File: DatObjWrapOpen_Init.st
- * Author: David
- * Created: July 27, 2010
- ********************************************************************
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of DatObjWrap, licensed under the MIT License.
+ * 
+  ********************************************************************
  * Implementation of library DatObjWrap
  ********************************************************************) 
 
