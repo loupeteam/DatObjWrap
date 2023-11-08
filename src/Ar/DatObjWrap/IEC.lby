@@ -4,7 +4,6 @@
   <Files>
     <File>DatObjWrap.html</File>
     <File>DatObjWrap.md</File>
-    <File>RevisionHistory.txt</File>
     <File Description="Exported data types">DatObjWrap.typ</File>
     <File Description="Exported constants">DatObjWrap.var</File>
     <File Description="Exported functions and function blocks">DatObjWrap.fun</File>
